@@ -11,6 +11,12 @@ var icon = document.getElementById("icon");
 var uvi = document.getElementById("uvi");
 var lat;
 var lon;
+var forecast = document.getElementById("forecast");
+var day1 = document.getElementById("day1");
+var day2 = document.getElementById("day2");
+var day3 = document.getElementById("day3");
+var day4 = document.getElementById("day4");
+
 
 function searchCity() {
      document.addEventListener("click", function(event) {
@@ -33,7 +39,8 @@ function getCoord() {
           lon = data.coord.lon;
           console.log(lat);
           console.log(lon);
-          weatherUrlAll = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=hourly,daily&appid=0bc67a3f3f64547ee2e870ae76499e59`
+          weatherUrlAll = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=hourly,minutely&appid=0bc67a3f3f64547ee2e870ae76499e59`
+          console.log(weatherUrlAll);
           getWeather();
      })     
 }
@@ -53,5 +60,31 @@ function getWeather() {
           humidity.textContent = `Humidity: ${data.current.humidity}`;
           wind.textContent = `Wind Speed: ${data.current.wind_speed}`;
           uvi.textContent = `Uvi: ${data.current.uvi}`;
+          getFuture(day1, 1);
+          getFuture(day2, 2);
+          getFuture(day3, 3);
+          getFuture(day4, 4);
+     })
+}
+
+function getFuture(day, n) {
+     day.textContent = moment().add(n, 'days').format("dddd");
+     fetch(weatherUrlAll)
+     .then(function(response) {
+          return response.json();
+     })
+     .then(function(data) {
+          var temp = document.createElement("div");
+          temp.textContent = `Temperature: ${data.daily[n].temp.day}`; 
+          day.appendChild(temp);
+          var humidity = document.createElement("div");
+          humidity.textContent = `Humidity: ${data.daily[n].humidity}`;
+          day.appendChild(humidity);
+          var wind = document.createElement("div");
+          wind.textContent = `Wind Speed: ${data.daily[n].wind_speed}`;
+          day.appendChild(wind);
+          var uvi = document.createElement("div");
+          uvi.textContent = `Uvi: ${data.daily[n].uvi}`;
+          day.appendChild(uvi);
      })
 }

@@ -19,19 +19,26 @@
                     <ul id="searchHistory" class="nav nav-pills flex-column mb-auto"></ul>
                </div>
           </div>
-          <div id="detailWeather" class="d-flex flex-column flex-shrink-0 p-3" style="height: 100vh;">
-               <div id="city" class="fs-1"></div>
-               <div id="date" class="fs-4"></div>
+          <div class="container">
+               <div id="detailWeather" class="d-flex flex-column flex-shrink-0 p-3">
+                    <div id="city" class="fs-1"></div>
+                    <div id="date" class="fs-4"></div>
+                    <br>
+                    <div id="weatherCondition">
+                         <img id="icon" style="width: 40px;">
+                         <div id="temp" class="fs-3"></div>
+                         <div id="humidity" class="fs-3"></div>
+                         <div id="wind" class="fs-3"></div>
+                         <div id="uvi" class="fs-3"></div>
+                    </div>
+               </div>
                <br>
-               <div id="weatherCondition"></div>
-               <img id="icon" style="width: 40px;">
-               <div id="temp" class="fs-3"></div>
-               <div id="humidity" class="fs-3"></div>
-               <div id="wind" class="fs-3"></div>
-               <div id="uvi" class="fs-3"></div>
-          </div>
-          <div>
-               
+               <div id="forecast" class="row">
+                    <div id="day1" class="col fs-5 p-3"></div>
+                    <div id="day2" class="col fs-5 p-3"></div>
+                    <div id="day3" class="col fs-5 p-3"></div>
+                    <div id="day4" class="col fs-5 p-3"></div>
+               </div>
           </div>
      </main>    
      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
