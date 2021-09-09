@@ -16,18 +16,43 @@ var day1 = document.getElementById("day1");
 var day2 = document.getElementById("day2");
 var day3 = document.getElementById("day3");
 var day4 = document.getElementById("day4");
+var cityHistory = JSON.parse(localStorage.getItem("history"));
+var searchHistory = document.getElementById("searchHistory");
 
+function getSearchHistory() {
+     console.log(cityHistory);
+     if (cityHistory === null) {
+          cityHistory = [];
+     } else {
+          for (var i = 0; i < cityHistory.length; i++) {
+               var cityName = document.createElement("button");
+               cityName.textContent = cityHistory[i];
+               searchHistory.appendChild(cityName);
+          }
+     }
+}
+
+getSearchHistory();
+searchCity();
 
 function searchCity() {
      document.addEventListener("click", function(event) {
           var element = event.target;
           if (element.matches("#searchBtn")) {
                weatherUrlCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=imperial&appid=0bc67a3f3f64547ee2e870ae76499e59`
+               cityHistory.unshift(cityInput.value);
+               localStorage.setItem("history", JSON.stringify(cityHistory));
+               getCoord();
+               var currentSearch = document.createElement("button");
+               currentSearch.textContent = cityInput.value;
+               searchHistory.prepend(currentSearch);
+          } else if (element.matches("button")) {
+               weatherUrlCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${element.textContent}&units=imperial&appid=0bc67a3f3f64547ee2e870ae76499e59`
                getCoord();
           }
      })
 }
-searchCity();
+
 
 function getCoord() {
      fetch(weatherUrlCurrent)
