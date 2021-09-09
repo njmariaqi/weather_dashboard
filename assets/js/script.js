@@ -39,15 +39,20 @@ function searchCity() {
      document.addEventListener("click", function(event) {
           var element = event.target;
           if (element.matches("#searchBtn")) {
+               var currentCity = cityInput.value;
                weatherUrlCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=imperial&appid=0bc67a3f3f64547ee2e870ae76499e59`
                cityHistory.unshift(cityInput.value);
                localStorage.setItem("history", JSON.stringify(cityHistory));
+               city.textContent = `${cityInput.value.toUpperCase()} Weather`;
+               date.textContent = moment().format("MMM, D, YYYY");
                getCoord();
                var currentSearch = document.createElement("button");
                currentSearch.textContent = cityInput.value;
                searchHistory.prepend(currentSearch);
           } else if (element.matches("button")) {
                weatherUrlCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${element.textContent}&units=imperial&appid=0bc67a3f3f64547ee2e870ae76499e59`
+               city.textContent = `${element.textContent.toUpperCase()} Weather`;
+               date.textContent = moment().format("MMM, D, YYYY");
                getCoord();
           }
      })
@@ -76,8 +81,7 @@ function getWeather() {
           return response.json();
      })
      .then(function(data) {
-          city.textContent = `${cityInput.value.toUpperCase()} Weather`;
-          date.textContent = moment().format("MMM, D, YYYY");
+
           var iconNo = `http://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`;
           console.log(iconNo);
           icon.setAttribute("src", iconNo);
